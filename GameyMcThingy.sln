@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameyMcThingy.WebAPI", "GameyMcThingy.WebAPI\GameyMcThingy.WebAPI.csproj", "{82457BB2-D895-4885-BCC6-4E8376ABFD17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameyMcThingy.Data", "GameyMcThingy.Data\GameyMcThingy.Data.csproj", "{1EEEA2A3-28DC-4EF4-802B-4EC0DEC4BCE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameyMcThingy.Models", "GameyMcThingy.Models\GameyMcThingy.Models.csproj", "{04E635DE-CB29-4DDD-989B-11F88BA59A1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameyMcThingy.Services", "GameyMcThingy.Services\GameyMcThingy.Services.csproj", "{099B4A3E-AE84-41F3-9072-C3079B28DE63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +24,17 @@ Global
 		{82457BB2-D895-4885-BCC6-4E8376ABFD17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82457BB2-D895-4885-BCC6-4E8376ABFD17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82457BB2-D895-4885-BCC6-4E8376ABFD17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EEEA2A3-28DC-4EF4-802B-4EC0DEC4BCE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EEEA2A3-28DC-4EF4-802B-4EC0DEC4BCE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EEEA2A3-28DC-4EF4-802B-4EC0DEC4BCE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EEEA2A3-28DC-4EF4-802B-4EC0DEC4BCE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04E635DE-CB29-4DDD-989B-11F88BA59A1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04E635DE-CB29-4DDD-989B-11F88BA59A1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04E635DE-CB29-4DDD-989B-11F88BA59A1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04E635DE-CB29-4DDD-989B-11F88BA59A1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{099B4A3E-AE84-41F3-9072-C3079B28DE63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{099B4A3E-AE84-41F3-9072-C3079B28DE63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{099B4A3E-AE84-41F3-9072-C3079B28DE63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{099B4A3E-AE84-41F3-9072-C3079B28DE63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
