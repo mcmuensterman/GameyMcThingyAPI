@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace GameyMcThingy.WebAPI
+namespace GameyMcThingy.Data
 {
-    public partial class GameyMcThingyContext : DbContext
+    public partial class ApplicationDbContext : DbContext
     {
-        public GameyMcThingyContext()
-        {
-        }
-
-        public GameyMcThingyContext(DbContextOptions<GameyMcThingyContext> options)
+        
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }

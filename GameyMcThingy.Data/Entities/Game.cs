@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GameyMcThingy.WebAPI
+namespace GameyMcThingy.Data.Entities
 {
     public partial class Game
     {
