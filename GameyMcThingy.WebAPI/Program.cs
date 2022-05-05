@@ -1,5 +1,6 @@
 using GameyMcThingy.Data;
 using Microsoft.EntityFrameworkCore;
+using GameyMcThingy.Services.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
+//Add User Service/Interface for Dependency Injection here
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddControllers();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
