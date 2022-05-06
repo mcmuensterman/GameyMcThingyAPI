@@ -83,4 +83,3 @@ namespace GameyMcThingy.Data
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
-

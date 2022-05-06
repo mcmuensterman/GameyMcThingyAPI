@@ -11,3 +11,4 @@ namespace GameyMcThingy.Data.Entities
         public DateTime? DateCreated { get; set; }
     }
 }
+
