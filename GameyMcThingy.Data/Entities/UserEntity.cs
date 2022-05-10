@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace GameyMcThingy.Data.Entities
@@ -11,3 +11,4 @@ namespace GameyMcThingy.Data.Entities
         public DateTime? DateCreated { get; set; }
     }
 }
+
