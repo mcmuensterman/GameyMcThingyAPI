@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GameyMcThingy.Data;
 using GameyMcThingy.Models.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameyMcThingy.Services.User
 {
@@ -18,9 +19,6 @@ namespace GameyMcThingy.Services.User
             }
             public async Task<bool> RegisterUserAsync(UserRegister model)
             {
-                // if (await GetUserByEmailAsync(model.Email) != null || await GetUserByUsernameAsync(model.Username) != null)
-                // return false;
-
                 var entity = new UserEntity
                 {
                     Email = model.Email,
@@ -28,7 +26,9 @@ namespace GameyMcThingy.Services.User
                     Password = model.Password,
                     DateCreated = DateTime.Now
                 };
-        
+
+                var passwordHasher = new PasswordHasher<UserEntity>();
+                entity.Password = passwordHasher.HashPassword(entity, model.Password);
                 _context.Users.Add(entity);
                 var numberOfChanges = await _context.SaveChangesAsync();
 
