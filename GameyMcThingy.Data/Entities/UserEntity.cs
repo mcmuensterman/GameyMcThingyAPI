@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-﻿using System;
-using System.Collections.Generic;
-
-namespace GameyMcThingy.Data.Entities
-{
-    public partial class UserEntity
-    {
-        public int Id { get; set; }
-        public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
-        public DateTime? DateCreated { get; set; }
-    }
-}
-=======
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,4 +22,3 @@ namespace GameyMcThingy.Data.Entities
 
     }
 }
->>>>>>> e8e021a2fd29c35446488b4fa93419fd9fe494da

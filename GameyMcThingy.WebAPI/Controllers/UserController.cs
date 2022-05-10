@@ -23,15 +23,15 @@ namespace GameyMcThingy.WebAPI.Controllers
         public async Task<IActionResult> RegisterUser([FromBody] UserRegister model)
         
         {
-            if (!ModelState.IsValid)
+             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+ 
             var registerResult = await _service.RegisterUserAsync(model);
             if(registerResult)
             {
-                return Ok("User was registered.`");
+                return Ok("User was registered.");
             }
 
             return BadRequest("User could not be registered.");
