@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using GameyMcThingy.Services.User;
 using GameyMcThingy.Models.User;
 using Microsoft.AspNetCore.Authorization;
+using GameyMcThingy.Models.Token;
+using GameyMcThingy.Services.Token;
 
 namespace GameyMcThingy.WebAPI.Controllers
 {
@@ -14,10 +16,12 @@ namespace GameyMcThingy.WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _service;
-        public UserController(IUserService service)
+        private readonly IUserService _userService;
+        private readonly ITokenService _tokenService;
+        public UserController(IUserService userService, ITokenService tokenService)
         {
-            _service = service;
+            _userService = userService;
+            _tokenService = tokenService;
         }
 
         [HttpPost("Register")]
@@ -29,7 +33,7 @@ namespace GameyMcThingy.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
  
-            var registerResult = await _service.RegisterUserAsync(model);
+            var registerResult = await _userService.RegisterUserAsync(model);
             if(registerResult)
             {
                 return Ok("User was registered.");
@@ -42,7 +46,7 @@ namespace GameyMcThingy.WebAPI.Controllers
         [HttpGet("{userId:int}")]
         public async Task<IActionResult> GetById([FromRoute] int userId)
         {
-            var userDetail = await _service.GetUserByIdAsync(userId);
+            var userDetail = await _userService.GetUserByIdAsync(userId);
 
             if (userDetail is null)
             {
@@ -50,6 +54,18 @@ namespace GameyMcThingy.WebAPI.Controllers
             }
 
             return Ok(userDetail);
+        }
+
+        [HttpPost("~/api/Token")]
+        public async Task<IActionResult> Token([FromBody] TokenRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var tokenResponse = await _tokenService.GetTokenAsync(request);
+            if (tokenResponse is null)
+                return BadRequest("Invalid username or password.");
+            
+            return Ok(tokenResponse);
         }
     }
 }
