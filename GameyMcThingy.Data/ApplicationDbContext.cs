@@ -19,6 +19,7 @@ namespace GameyMcThingy.Data
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<UserEntity> Users {get; set;}
+        public DbSet<NoteEntity> Notes {get; set;}
     }
 }
 
