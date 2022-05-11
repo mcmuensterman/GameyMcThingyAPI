@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GameyMcThingy.Services.User;
 using GameyMcThingy.Models.User;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameyMcThingy.WebAPI.Controllers
 {
@@ -35,6 +36,20 @@ namespace GameyMcThingy.WebAPI.Controllers
             }
 
             return BadRequest("User could not be registered.");
+        }
+        
+        [Authorize]
+        [HttpGet("{userId:int}")]
+        public async Task<IActionResult> GetById([FromRoute] int userId)
+        {
+            var userDetail = await _service.GetUserByIdAsync(userId);
+
+            if (userDetail is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userDetail);
         }
     }
 }
