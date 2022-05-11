@@ -47,7 +47,7 @@ namespace GameyMcThingy.Services.Token
 			var claims = GetClaims(entity);
 
 			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-			var credentials = new SigningCredintials(securityKey, SecurityAlgorithms.HmacSha256);
+			var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 			var tokenDescriptor = new SecurityTokenDescriptor
 			{
