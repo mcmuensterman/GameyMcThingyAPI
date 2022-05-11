@@ -35,6 +35,24 @@ namespace GameyMcThingy.Services.User
                 return numberOfChanges == 1;
             }
 
+            public async Task<UserDetail> GetUserByIdAsync(int userId)
+            {
+                var entity = await _context.Users.FindAsync(userId);
+                if (entity is null)
+                    return null;
+
+                var userDetail = new UserDetail
+                {
+                    Id = entity.Id,
+                    Email = entity.Email,
+                    Username = entity.Username,
+                    DateCreated = entity.DateCreated
+                };
+
+                return userDetail;
+            }
+            
+         
             private async Task<UserEntity> GetUserByEmailAsync(string email)
             {
                 return await _context.Users.FirstOrDefaultAsync(user => user.Email.ToLower() == email.ToLower());
@@ -44,5 +62,6 @@ namespace GameyMcThingy.Services.User
                 return await _context.Users.FirstOrDefaultAsync(user => user.Username.ToLower() == username.ToLower());
             }
             
+
     }
 }
