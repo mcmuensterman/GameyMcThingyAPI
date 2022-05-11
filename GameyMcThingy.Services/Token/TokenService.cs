@@ -1,18 +1,25 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using GameyMcThingy.Data;
 using GameyMcThingy.Data.Entities;
 using GameyMcThingy.Models.Token;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GameyMcThingy.Services.Token
 {
 	public class TokenService : ITokenService
 	{
 		private readonly ApplicationDbContext _context;
-		public TokenService(ApplicationDbContext context)
+		private readonly IConfiguration _configuration;
+		public TokenService(ApplicationDbContext context, IConfiguration configuration)
 		{
 			_context = context;
+			_configuration = configuration;
 		}
 		public async Task<TokenResponse> GetTokenAsync(TokenRequest model)
 		{
@@ -35,20 +42,49 @@ namespace GameyMcThingy.Services.Token
 				return null;
 			return userEntity;
 		}
-		// private TokenResponse GenerateToken(UserEntity entity) { }
+		private TokenResponse GenerateToken(UserEntity entity)
+		{
+			var claims = GetClaims(entity);
 
-		// private Claim[] GetClaims(UserEntity user)
-		// {
+			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+			var credentials = new SigningCredintials(securityKey, SecurityAlgorithms.HmacSha256);
+
+			var tokenDescriptor = new SecurityTokenDescriptor
+			{
+				Issuer = _configuration["Jwt:Issuer"],
+				Audience = _configuration["Jwt:Audience"],
+				Subject = new ClaimsIdentity(claims),
+				IssuedAt = DateTime.UtcNow,
+				Expires = DateTime.UtcNow.AddDays(14),
+				SigningCredentials = credentials
+			};
+			var tokenHandler = new JwtSecurityTokenHandler();
+			var token = tokenHandler.CreateToken(tokenDescriptor);
+
+			var tokenResponse = new TokenResponse
+			{
+				Token = tokenHandler.WriteToken(token),
+				IssuedAt = token.ValidFrom,
+				Expires = token.ValidTo
+			};
+			return tokenResponse;
+		}
+
+
 		// 	var fullName -$"{user.FirstName} {user.LastName}";
 		// 	var name = !string.IsNullOrWhiteSpace(fullName) ? fullName : user.Username;
-		// 	var claims = new Claim[]
-		// 	{
-		// new Claim("Id", user.id.ToString()),
-		// new Claim("Username", user.Username),
-		// new Claim("Email", user.Email),
-		// new Claim("Name", name),
-		// 	};
-		// 	return claims;
-		// }
+		private Claim[] GetClaims(UserEntity user)
+		{
+			var name = user.Username;
+			var claims = new Claim[]
+			{
+			new Claim("Id", user.Id.ToString()),
+			new Claim("Username", user.Username),
+			new Claim("Email", user.Email),
+			new Claim("Name", name),
+			};
+			return claims;
+		}
+
 	}
 }
