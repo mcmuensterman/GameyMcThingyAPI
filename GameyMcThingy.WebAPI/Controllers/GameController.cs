@@ -35,5 +35,19 @@ namespace GameyMcThingy.WebAPI.Controllers
             var games = await _gameService.GetAllGamesAsync();
             return Ok(games);
         }
+
+        // Get api/Game/5
+        [HttpGet("gameId:int")]
+        public async Task<IActionResult> GetGameById([FromRoute] int gameId)
+        {
+            var detail = await _gameService.GetGameByIdAsync(gameId);
+
+            // Similar to our service method, we're using a ternary to determine our return type
+            // If the returned value (detail) is not null, return it with a 200 OK
+            // Otherwise return a NotFound() 404 response
+            return detail is not null
+            ? Ok(detail)
+            : NotFound();
+        }
     }
 }
