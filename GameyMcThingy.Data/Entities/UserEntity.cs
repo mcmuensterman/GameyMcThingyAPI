@@ -20,5 +20,7 @@ namespace GameyMcThingy.Data.Entities
         [Required]
         public DateTime DateCreated { get; set; }
 
+        public List<Rating> Ratings { get; set; }
+
     }
 }

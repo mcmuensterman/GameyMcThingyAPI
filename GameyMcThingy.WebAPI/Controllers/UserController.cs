@@ -67,5 +67,6 @@ namespace GameyMcThingy.WebAPI.Controllers
             
             return Ok(tokenResponse);
         }
+        
     }
 }

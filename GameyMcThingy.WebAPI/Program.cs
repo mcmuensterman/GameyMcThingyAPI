@@ -1,5 +1,6 @@
 using System.Text;
 using GameyMcThingy.Data;
+using GameyMcThingy.Services.Rating;
 using GameyMcThingy.Services.Token;
 using GameyMcThingy.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -49,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
 //Add User Service/Interface for Dependency Injection here
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
 
 // services.AddScoped<IUserService, UserService>();
 
