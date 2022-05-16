@@ -3,48 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GameyMcThingy.Data.Entities;
+using GameyMcThingy.Services.Rating;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameyMcThingy.WebAPI.Controllers
 {
-    [Route("[controller]")]
-    public class RatingController : Controller
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RatingController : ControllerBase
     {
-        // private readonly IUserService _userService;
-        // private readonly ITokenService _tokenService;
+        private readonly IRatingService _ratingService;
+        public RatingController(IRatingService ratingService)
+        {
+            _ratingService = ratingService;
+        }
 
-        // public RatingController(IUserService userService, ITokenService tokenService)
-        // {
-        //     _context = context;
-        //     _logger = logger;
-        // }
+        // GET api/Note
+        [HttpGet]
+        public async Task<IActionResult> GetAllRatings()
+        {
+            var ratings = await _ratingService.GetAllRatingsAsync();
+            return Ok(ratings);
 
-        // public IActionResult Index()
-        // {
-        //     return View();
-        // }
-
-        // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        // public IActionResult Error()
-        // {
-        //     return View("Error!");
-        // }
-
-        // [HttpPost]
-        // public async Task<IActionResult> RateGame([FromForm] Rating model) 
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-        //      _context.Ratings.Add(new Rating() {
-        //         Score = model.Score,
-        //         GameId = model.Game,
-        //      });
-
-        //      await _context.SaveChangesAsync();
-
-        //      return Ok();
-        // }
+        }
     }
 }
