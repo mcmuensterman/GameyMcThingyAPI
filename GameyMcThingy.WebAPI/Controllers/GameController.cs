@@ -49,5 +49,25 @@ namespace GameyMcThingy.WebAPI.Controllers
             ? Ok(detail)
             : NotFound();
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateNoteById([FromBody] GameUpdate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _gameService.UpdateGameAsync(request)
+            ? Ok("Game updated successfully.")
+            : BadRequest("Game Could not be updated.");
+        }
+
+        // Delete api/Note/5
+        [HttpDelete("{gameId:int}")]
+        public async Task<IActionResult> DeleteGame([FromRoute] int gameId)
+        {
+            return await _gameService.DeleteGameAsync(gameId)
+            ? Ok($"Game {gameId} was deleted successfully.")
+            : BadRequest($"Game {gameId} could not be deleted.");
+        }
     }
 }

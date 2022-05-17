@@ -56,7 +56,38 @@ namespace GameyMcThingy.Services.Game
                 Id = gameEntity.Id,
                 Title = gameEntity.Title,
                 Manufacturer = gameEntity.Manufacturer
-            }
+            };
+        }
+
+        public async Task<bool> UpdateGameAsync(GameUpdate request)
+        {
+            // Find the game and validate it's owned by the user
+            var gameEntity = await _dbContext.Games.FindAsync(request.Id);
+
+            // By using the null conditional operator we can check if it's null at the same time we check the OwnerId
+            if (gameEntity?.OwnerId != _userId)
+                return false;
+
+            gameEntity.Title = request.Title;
+            gameEntity.Manufacturer = request.Manufacturer;
+
+            var numberOfChanges = await _dbContext.SaveChangesASync();
+
+            return numberOfChanges == 1;
+        }
+
+        public async Task<bool> DeleteGameAsync(int gameId)
+        {
+            // Find Game by the given Id
+            var gameEntity = await _dbContext.Games.FindAsync(gameId);
+
+            // Validate the Game exists and is owned by the owner
+            if (gameEntity?.OwnerId != _userId)
+                return false;
+
+            // Remove the game from the DbContext and assert that the one change was saved.
+            _dbContext.Games.Remove(gameEntity);
+            return await _dbContext.SaveChangesAsync() == 1;
         }
 
 
