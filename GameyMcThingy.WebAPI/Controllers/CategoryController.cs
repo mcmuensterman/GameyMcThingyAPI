@@ -17,5 +17,12 @@ namespace GameyMcThingy.WebAPI.Controllers
         {
             _categoryService = categoryService;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var categories = await _categoryService.GetAllCategoriesAsync();
+            return Ok(categories);
+        }
     }
 }
