@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameyMcThingy.Data.Entities
 {
-    public partial class Category
+    public class Category
     {
         public int CategoryId { get; set; }
         public int? GameId { get; set; }

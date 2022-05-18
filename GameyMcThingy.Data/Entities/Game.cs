@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace GameyMcThingy.Data.Entities
 {
-    public partial class Game
+    public class Game
     {
         public Game()
         {
             Categories = new HashSet<Category>();
             Ratings = new HashSet<Rating>();
-            Reviews = new HashSet<Review>();
+            Reviews = new HashSet<ReviewEntity>();
         }
 
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace GameyMcThingy.Data.Entities
 
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<ReviewEntity> Reviews { get; set; }
     }
 }
