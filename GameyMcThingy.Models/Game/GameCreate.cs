@@ -11,6 +11,6 @@ namespace GameyMcThingy.Models.Game
         [Required]
         [MinLength(2, ErrorMessage = "{0} ,must be at least {1} characers long.")]
         [MaxLength(100, ErrorMessage = "{0} must contain no more than {1} characters.")]
-        public string? Manufacturer { get; set; }
+        public string Manufacturer { get; set; }
     }
 }

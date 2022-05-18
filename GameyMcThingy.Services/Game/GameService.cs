@@ -4,11 +4,29 @@ using System.Threading.Tasks;
 using GameyMcThingy.Models.Game;
 using GameyMcThingy.Data;
 using GameyMcThingy.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+
+
 
 namespace GameyMcThingy.Services.Game
 {
     public class GameService : IGameService
     {
+        private readonly ApplicationDbContext _dbContext;
+        private readonly int _userId;
+        public GameService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext)
+        {
+            var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            var value = userClaims.FindFirst("Id")?.Value;
+            var validId = int.TryParse(value, out _userId);
+            if (!validId)
+                throw new Exception("Attempted to build GameService without User Id Claim.");
+
+            _dbContext = dbContext;
+
+        }
+
         public Task<bool> CreateGameAsnyc(GameCreate request)
         {
             throw new NotImplementedException();
@@ -16,11 +34,11 @@ namespace GameyMcThingy.Services.Game
 
         public async Task<IEnumerable<GameListItem>> GetAllGamesAsync()
         {
-            var games = await _dbContext.Notes
+            var games = await _dbContext.Games
                 .Where(entity => entity.OwnerId == _userId)
-                .Select(entity => new GameListItem)
+                .Select(entity => new GameListItem
                 {
-                Id = entity.Id,
+                    Id = entity.Id,
                     Title = entity.Title,
                     Manufacturer = entity.Manufacturer
                 })
@@ -31,13 +49,13 @@ namespace GameyMcThingy.Services.Game
 
         public async Task<bool> CreateGameAsync(GameCreate request)
         {
-            var GameEntity = new GameEntity
+            var gameEntity = new GameEntity
             {
                 Title = request.Title,
                 Manufacturer = request.Manufacturer
             };
 
-            _dbContext.Games.Add(GameEntity);
+            _dbContext.Games.Add(gameEntity);
 
             var numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
@@ -47,7 +65,7 @@ namespace GameyMcThingy.Services.Game
         {
             // Find the first game that has the given Id and OwnerId that matches the requesting UserID
             var gameEntity = await _dbContext.Games
-                .FirstOrDefaultASync(e => e.Id == noteId && e.OwnerId == _userId
+                .FirstOrDefaultAsync(e => e.Id gameId && e.OwnerId == _userId
                 );
 
             // If GameEntity is null then return null, othewrwise intialize and return a new GameDetail
@@ -71,7 +89,7 @@ namespace GameyMcThingy.Services.Game
             gameEntity.Title = request.Title;
             gameEntity.Manufacturer = request.Manufacturer;
 
-            var numberOfChanges = await _dbContext.SaveChangesASync();
+            var numberOfChanges = await _dbContext.SaveChangesAsync();
 
             return numberOfChanges == 1;
         }

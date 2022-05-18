@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameyMcThingy.Data.Entities
 {
-    public partial class Review
+    public class Review
     {
         public int ReviewId { get; set; }
         public string ReviewTitle { get; set; } = null!;

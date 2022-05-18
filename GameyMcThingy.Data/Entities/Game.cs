@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameyMcThingy.Data.Entities
 {
-    public partial class Game
+    public class Game
     {
         public Game()
         {
@@ -14,7 +14,8 @@ namespace GameyMcThingy.Data.Entities
 
         public int Id { get; set; }
         public string Title { get; set; } = null!;
-        public string? Manufacturer { get; set; }
+        public string Manufacturer { get; set; }
+        public int OwnerId { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }

@@ -4,6 +4,6 @@ namespace GameyMcThingy.Models.Game
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
-        public string? Manufacturer { get; set; }
+        public string Manufacturer { get; set; }
     }
 }

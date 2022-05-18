@@ -10,7 +10,6 @@ namespace GameyMcThingy.Data.Entities
         // [Required]
         // public int OwnerId { get; set; }
         [Required]
-
         public string Title { get; set; } = null!;
         [Required]
 
