@@ -13,6 +13,7 @@ namespace GameyMcThingy.Data.Entities
         public int GameId { get; set; }
         [Required]
         public string GameCategory { get; set; }
+        public string CategoryDescriptor { get; set; }
         [Required]
         public virtual Game Game { get; set; }
         public List<Game> Games { get; set; }

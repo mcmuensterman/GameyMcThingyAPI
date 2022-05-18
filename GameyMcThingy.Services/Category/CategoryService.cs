@@ -4,7 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using GameyMcThingy.Data;
+using GameyMcThingy.Data.Entities;
+using GameyMcThingy.Models.Category;
 
 namespace GameyMcThingy.Services.Category
 {
@@ -29,7 +32,7 @@ namespace GameyMcThingy.Services.Category
             var category = new Category
             {
                 GameCategory = request.GameCategory,
-                Description = request.Description,
+                Description = request.CategoryDescriptor
             };
 
         _dbContext.Categories.Add(category);
@@ -45,9 +48,20 @@ namespace GameyMcThingy.Services.Category
                 .Select(entity => new CategoryListItem
                 {
                     CategoryId = entity.CategoryId,
-                    CategoryName = entity.GameCategory
+                    GameCategory = entity.GameCategory
                 })
                 .ToListAsync();
+
+                return categories;
+        }
+
+        public async Task<bool> DeleteCategoryAsync(int categoryId)
+        {
+            var category = await _dbContext.Categories.FindAsync(categoryId);
+
+
+            _dbContext.Categories.Remove(category);
+            return await _dbContext.SaveChangesAsync() == 1;
         }
     }
 }
