@@ -9,10 +9,11 @@ namespace GameyMcThingy.Data.Entities
         [Key]
         public int CategoryId { get; set; }
         [Required]
-        public int? GameId { get; set; }
+        public int GameId { get; set; }
         [Required]
-        public string? GameCategory { get; set; }
+        public string GameCategory { get; set; }
         [Required]
-        public virtual Game? Game { get; set; }
+        public virtual Game Game { get; set; }
+        public List<Game> Games { get; set; }
     }
 }
