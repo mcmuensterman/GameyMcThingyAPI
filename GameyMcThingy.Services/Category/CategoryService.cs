@@ -23,5 +23,31 @@ namespace GameyMcThingy.Services.Category
             
             _dbContext = dbContext;
         }
+
+        public async Task<bool> CreateCategoryAsync(CategoryCreate request)
+        {
+            var category = new Category
+            {
+                GameCategory = request.GameCategory,
+                Description = request.Description,
+            };
+
+        _dbContext.Categories.Add(category);
+
+        var numberOfChanges = await _dbContext.SaveChangesAsync();
+        return numberOfChanges == 1;
+
+        }
+
+        public async Task<IEnumerable<CategoryListItem>> GetAllCategoriesAsync()
+        {
+            var categories = await _dbContext.Categories
+                .Select(entity => new CategoryListItem
+                {
+                    CategoryId = entity.CategoryId,
+                    CategoryName = entity.GameCategory
+                })
+                .ToListAsync();
+        }
     }
 }

@@ -8,17 +8,10 @@ namespace GameyMcThingy.Services.Category
 {
     public interface ICategoryService
     {
-       public async Task<IEnumerable<CategoryListItem>> GetAllCategoriesAsync()
-        {
-            var categories = await _dbContext.Categories
-            .Select(entity => new CategoryListItem
-            {
-                Id = entity.Id,
-                GameCategory = entity.GameCategory
-            })
-            .ToListAsync();
-
-            return categories;
-        }
+        Task<bool> CreateCategoryAsync(CategoryCreate request);
+        Task<IEnumerable<CategoryListItem>> GetAllCategoriesAsync();
+        Task<CategoryDetail> GetCategoryByIdAsync(int categoryId);
+        Task<bool> DeleteCategoryAsync(int categoryId);
+       
     }
 }

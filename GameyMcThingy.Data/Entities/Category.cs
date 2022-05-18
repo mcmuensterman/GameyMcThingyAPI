@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameyMcThingy.Data.Entities
 {
@@ -8,7 +9,7 @@ namespace GameyMcThingy.Data.Entities
     {
         [Key]
         public int CategoryId { get; set; }
-        [Required]
+        [ForeignKey("Game")]
         public int GameId { get; set; }
         [Required]
         public string GameCategory { get; set; }
