@@ -35,5 +35,27 @@ namespace GameyMcThingy.Services.Review
 
             return numberOfChanges == 1;
         }
+
+        //Delete Review
+        public async Task<bool> DeleteReview (int reviewId)
+        {
+            var entity = await _context.Reviews.FindAsync(reviewId);
+                if (entity is null)
+                    return false;
+
+            _context.Reviews.Remove(entity);
+
+            var numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+        }
+
+        //Get Reviews by GameId
+        public async Task<ReviewModel> GetReviewByGame (int gameId)
+        {
+
+        }
+
+        //Update a Review
+
     }
 }

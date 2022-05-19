@@ -14,5 +14,7 @@ namespace GameyMcThingy.Services.Review
     public interface IReviewService
     {
         public Task<bool> AddReviewToGame(ReviewModel model);
+        public Task<bool> DeleteReview (int reviewId);
+        public Task<ReviewModel> GetReviewByGame (int gameId);
     }
 }

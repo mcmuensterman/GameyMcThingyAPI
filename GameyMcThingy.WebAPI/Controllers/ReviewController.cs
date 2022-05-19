@@ -37,6 +37,19 @@ namespace GameyMcThingy.WebAPI.Controllers
             return BadRequest("Review could not be posted.");
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteReview ([FromRoute] int reviewId)
+        {
+            var deleteResult = await _reviewService.DeleteReview(reviewId);
+
+            if(deleteResult)
+            {
+                return Ok("Review was deleted.");
+            }
+
+            return BadRequest("Review could not be deleted.");
+        }
+
         public IActionResult Index()
         {
             return View();
