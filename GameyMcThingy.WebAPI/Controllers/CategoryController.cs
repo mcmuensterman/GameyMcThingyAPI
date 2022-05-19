@@ -19,13 +19,6 @@ namespace GameyMcThingy.WebAPI.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
-        {
-            var categories = await _categoryService.GetAllCategoriesAsync();
-            return Ok(categories);
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreate request)
         {
@@ -36,6 +29,24 @@ namespace GameyMcThingy.WebAPI.Controllers
                 return Ok("New Category Created");
 
             return BadRequest("Error - Please try again");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var categories = await _categoryService.GetAllCategoriesAsync();
+            return Ok(categories);
+        }
+
+        [HttpGet("{categoryId:int}")]
+        public async Task<IActionResult> GetCategoryById([FromRoute] int categoryId)
+        {
+            var detail = await _categoryService.GetCategoryByIdAsync(categoryId);
+
+            //using ternary to determine return type, if null return 404, otherwise 200 OK
+            return detail is not null
+                ? Ok(detail)
+                : NotFound();
         }
 
          [HttpDelete("{categoryId:int}")]

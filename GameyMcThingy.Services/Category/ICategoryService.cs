@@ -10,6 +10,7 @@ namespace GameyMcThingy.Services.Category
     {
         Task<bool> CreateCategoryAsync(CategoryCreate request);
         Task<IEnumerable<CategoryListItem>> GetAllCategoriesAsync();
+        Task<CategoryDetail> GetCategoryByIdAsync(int CategoryId);
         Task<bool> DeleteCategoryAsync(int categoryId);
        
     }

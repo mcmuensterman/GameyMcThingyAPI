@@ -55,6 +55,22 @@ namespace GameyMcThingy.Services.Category
                 return categories;
         }
 
+        public async Task<CategoryDetail> GetCategoryByIdAsync(int categoryId)
+                {
+            // Find the first category that has given ID
+            var categoryEntity = await _dbContext.Categories
+                .FirstOrDefaultAsync(e =>
+                    e.CategoryId == categoryId
+                );
+            //if null then returns null, otherwise it will init and return a NoteDetail
+            return categoryEntity is null ? null : new CategoryDetail
+            {
+                CategoryId = categoryEntity.CategoryId,
+                GameCategory = categoryEntity.GameCategory,
+                CategoryDescriptor = categoryEntity.CategoryDescriptor
+            };
+        }
+
         public async Task<bool> DeleteCategoryAsync(int categoryId)
         {
             var category = await _dbContext.Categories.FindAsync(categoryId);

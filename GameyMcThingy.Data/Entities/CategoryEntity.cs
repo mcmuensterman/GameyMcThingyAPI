@@ -9,13 +9,20 @@ namespace GameyMcThingy.Data.Entities
     {
         [Key]
         public int CategoryId { get; set; }
+
         [ForeignKey("Game")]
         public int GameId { get; set; }
+
         [Required]
+        [MaxLength(30, ErrorMessage = "Category Name cannot be more than {1} characters.")]
         public string GameCategory { get; set; }
+
+        [MaxLength(200, ErrorMessage = "Description cannot be more than {1} characters.")]
         public string CategoryDescriptor { get; set; }
+
         [Required]
         public virtual Game Game { get; set; }
+        
         public List<Game> Games { get; set; }
     }
 }
