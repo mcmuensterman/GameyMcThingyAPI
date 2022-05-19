@@ -14,12 +14,15 @@ namespace GameyMcThingy.Data
             : base(options)
             {
             }
-        public DbSet<Category> Categories {get; set;}
+        public DbSet<CategoryEntity> Categories {get; set;}
         public DbSet<Game> Games { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<ReviewEntity> Reviews { get; set; }
         public DbSet<UserEntity> Users {get; set;}
         public DbSet<NoteEntity> Notes {get; set;}
+
+
     }
+
 }
 
