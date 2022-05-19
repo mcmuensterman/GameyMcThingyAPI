@@ -7,7 +7,7 @@ namespace GameyMcThingy.Models.Category
 {
     public class CategoryDetail
     {
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
         public string GameCategory { get; set; }
         public string CategoryDescriptor { get; set; }
     }

@@ -29,10 +29,10 @@ namespace GameyMcThingy.Services.Category
 
         public async Task<bool> CreateCategoryAsync(CategoryCreate request)
         {
-            var category = new Category
+            var category = new CategoryEntity
             {
                 GameCategory = request.GameCategory,
-                Description = request.CategoryDescriptor
+                CategoryDescriptor = request.CategoryDescriptor
             };
 
         _dbContext.Categories.Add(category);

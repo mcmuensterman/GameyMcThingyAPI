@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameyMcThingy.Data.Entities
 {
-    public partial class Category
+    public class CategoryEntity
     {
         [Key]
         public int CategoryId { get; set; }
