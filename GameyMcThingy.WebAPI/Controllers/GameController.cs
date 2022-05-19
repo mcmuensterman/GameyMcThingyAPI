@@ -14,8 +14,8 @@ namespace GameyMcThingy.WebAPI.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
-        private readonly IGameService _gameService;
-        public GameController(IGameService gameService)
+        private readonly GameService _gameService;
+        public GameController(GameService gameService)
         {
             _gameService = gameService;
         }
@@ -24,7 +24,7 @@ namespace GameyMcThingy.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (await _gameService.CreateGameAsnyc(request))
+            if (await _gameService.CreateGameAsync(request))
                 return Ok("Game created successfully.");
             return BadRequest("Game could not be created.");
         }

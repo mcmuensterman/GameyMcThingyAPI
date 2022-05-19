@@ -12,11 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddScoped<IUserService, UserService>();
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+// builder.Services.AddScoped<IUserService, UserService>();
 // Game Service 15.02 ZM
-builder.Services.AddScoped<IGameService, GameService>();
+// builder.Services.AddScoped<IGameService, GameService>();
 
 
 builder.Services.AddControllers();
@@ -49,10 +49,14 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
+// Add connection string and DbContext setup
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddHttpContextAccessor();
 //Add User Service/Interface for Dependency Injection here
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IGameService, GameService>();
 
 // services.AddScoped<IUserService, UserService>();
 
