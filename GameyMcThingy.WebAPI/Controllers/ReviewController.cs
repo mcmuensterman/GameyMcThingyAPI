@@ -63,6 +63,19 @@ namespace GameyMcThingy.WebAPI.Controllers
             return Ok(reviewModel);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateReview (ReviewModel model)
+        {
+            var reviewModel = await _reviewService.UpdateReview(model);
+
+            if (reviewModel is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(reviewModel);
+        }
+
         public IActionResult Index()
         {
             return View();

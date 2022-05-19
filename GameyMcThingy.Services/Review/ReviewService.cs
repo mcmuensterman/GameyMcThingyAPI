@@ -67,6 +67,20 @@ namespace GameyMcThingy.Services.Review
         }
 
         //Update a Review
+        public async Task<ReviewModel> UpdateReview (ReviewModel model)
+        {
+            var entity = _context.Reviews.Find(model.ReviewId);
+
+            if(entity is null)
+            return null;
+
+            entity.ReviewTitle = model.ReviewTitle;
+            entity.ReviewComment = model.ReviewComment;
+
+            await _context.SaveChangesAsync();
+
+            return model;
+        }
 
     }
 }
