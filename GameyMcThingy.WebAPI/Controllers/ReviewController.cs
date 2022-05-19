@@ -37,7 +37,7 @@ namespace GameyMcThingy.WebAPI.Controllers
             return BadRequest("Review could not be posted.");
         }
 
-        [HttpDelete]
+        [HttpDelete("{reviewId:int}")]
         public async Task<IActionResult> DeleteReview ([FromRoute] int reviewId)
         {
             var deleteResult = await _reviewService.DeleteReview(reviewId);
@@ -48,6 +48,19 @@ namespace GameyMcThingy.WebAPI.Controllers
             }
 
             return BadRequest("Review could not be deleted.");
+        }
+
+        [HttpGet("{gameId:int}")]
+        public async Task<IActionResult> GetReviewByGame (int gameId)
+        {
+            var reviewModel = await _reviewService.GetReviewByGame(gameId);
+
+            if (reviewModel is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(reviewModel);
         }
 
         public IActionResult Index()

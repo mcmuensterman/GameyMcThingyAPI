@@ -52,7 +52,18 @@ namespace GameyMcThingy.Services.Review
         //Get Reviews by GameId
         public async Task<ReviewModel> GetReviewByGame (int gameId)
         {
+            var entity = await _context.Reviews.FindAsync(gameId);
+                if (entity is null)
+                    return null;
 
+                var reviewModel = new ReviewModel
+                {
+                    ReviewId = entity.ReviewId,
+                    ReviewTitle = entity.ReviewTitle,
+                    ReviewComment = entity.ReviewComment
+                };
+
+                return reviewModel;
         }
 
         //Update a Review
