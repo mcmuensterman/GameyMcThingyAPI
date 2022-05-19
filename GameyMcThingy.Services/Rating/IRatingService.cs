@@ -6,6 +6,7 @@ namespace GameyMcThingy.Services.Rating
 {
     public interface IRatingService
     {
-         Task<IEnumerable<RatingListItem>> GetAllRatingsAsync();
+         Task<IEnumerable<RatingListItem>> GetAllRatingsAsync(int userId);
+         Task<bool> CreateGameRatingAsync(RatingModel model);
     }
 }

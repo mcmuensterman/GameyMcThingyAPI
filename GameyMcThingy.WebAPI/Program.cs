@@ -14,7 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -48,9 +52,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 //Add User Service/Interface for Dependency Injection here
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IRatingService, RatingService>();
+// builder.Services.AddScoped<IUserService, UserService>();
 
 // services.AddScoped<IUserService, UserService>();
 
@@ -69,7 +71,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 });
 
-builder.Services.AddControllers();
+// builder.Services.AddControllers();
 
 var app = builder.Build();
 

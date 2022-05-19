@@ -11,7 +11,7 @@ namespace GameyMcThingy.Services.Rating
 {
 	public class RatingService : IRatingService
 	{
-		private readonly int _userId;
+		private readonly int _userId;  
 		private readonly ApplicationDbContext _dbContext;
 		public RatingService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext)
 		{
@@ -24,20 +24,34 @@ namespace GameyMcThingy.Services.Rating
 			_dbContext = dbContext;
 		}
 
-		public async Task<IEnumerable<RatingListItem>> GetAllRatingsAsync()
+		public async Task<IEnumerable<RatingListItem>> GetAllRatingsAsync(int userId)
 		{
 			var ratings = await _dbContext.Ratings
-			.Where(entity => entity.OwnerId == _userId)
+			.Where(entity => entity.OwnerId == userId)
 			.Select(entity => new RatingListItem
 			{
 				RatingId = entity.RatingId,
 				Score = entity.Score,
-                // GameId = entity.GameId,
+                GameId = entity.GameId,
 				CreatedUtc = entity.CreatedUtc
-			})
+			}) 
 			.ToListAsync();
 
 			return ratings;
 		}
+
+		public async Task<bool> CreateGameRatingAsync(RatingModel model)
+        {
+            var entity = new RatingEntity()
+            {
+				Score = model.Score,
+                GameId = model.GameId,
+				CreatedUtc = model.CreatedUtc
+            };
+			_dbContext.Ratings.Add(entity);
+			var numberOfChanges = await _dbContext.SaveChangesAsync();
+			return numberOfChanges == 1;
+        }
+
 	}
 }
