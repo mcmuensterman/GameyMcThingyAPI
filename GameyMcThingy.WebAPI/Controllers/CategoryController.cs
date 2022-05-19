@@ -53,7 +53,7 @@ namespace GameyMcThingy.WebAPI.Controllers
         public async Task<IActionResult> DeleteCategory([FromRoute] int categoryId)
         {
             return await _categoryService.DeleteCategoryAsync(categoryId)
-                ? Ok ("Category Deleted")
+                ? Ok ($"Category {categoryId} Deleted")
                 : BadRequest("Error - Please try again");
         }
     }
