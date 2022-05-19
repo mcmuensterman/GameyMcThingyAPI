@@ -9,11 +9,11 @@ namespace GameyMcThingy.Models.Category
     public class CategoryCreate
     {
         [Required]
-        [MinLength(2, ErrorMessage = "{0} must be at least {1} characters long.")]
-        [MaxLength(30, ErrorMessage ="{0} must be no more than {1} characters.")]
+        [MinLength(2, ErrorMessage = "Category Name needs at least {1} characters.")]
+        [MaxLength(30, ErrorMessage ="Category Name cannot be more than {1} characters.")]
         public string GameCategory { get; set; }
         [Required]
-        [MaxLength(100, ErrorMessage ="{0} must be no more than {1} characters.")]
+        [MaxLength(200, ErrorMessage ="Description cannot be more than {1} characters.")]
         public string CategoryDescriptor { get; set; }
     }
 }

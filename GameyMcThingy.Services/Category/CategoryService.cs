@@ -29,13 +29,13 @@ namespace GameyMcThingy.Services.Category
 
         public async Task<bool> CreateCategoryAsync(CategoryCreate request)
         {
-            var category = new CategoryEntity
+            var entity = new CategoryEntity
             {
                 GameCategory = request.GameCategory,
                 CategoryDescriptor = request.CategoryDescriptor
             };
 
-        _dbContext.Categories.Add(category);
+        _dbContext.Categories.Add(entity);
 
         var numberOfChanges = await _dbContext.SaveChangesAsync();
         return numberOfChanges == 1;

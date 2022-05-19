@@ -8,7 +8,7 @@ namespace GameyMcThingy.Data.Entities
     {
         public Game()
         {
-            Categories = new HashSet<Category>();
+            Categories = new HashSet<CategoryEntity>();
             Ratings = new HashSet<Rating>();
             Reviews = new HashSet<Review>();
         }
@@ -20,7 +20,7 @@ namespace GameyMcThingy.Data.Entities
         public int OwnerId { get; set; }
         public UserEntity Owner { get; set; }
 
-        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<CategoryEntity> Categories { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
     }
