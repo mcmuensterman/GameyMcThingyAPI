@@ -4,6 +4,7 @@ using GameyMcThingy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameyMcThingy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220515235028_AddUserEntity")]
+    partial class AddUserEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,11 +33,9 @@ namespace GameyMcThingy.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
 
                     b.Property<string>("GameCategory")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("GameId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("CategoryId");
@@ -184,9 +184,7 @@ namespace GameyMcThingy.Data.Migrations
                 {
                     b.HasOne("GameyMcThingy.Data.Entities.Game", "Game")
                         .WithMany("Categories")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GameId");
 
                     b.Navigation("Game");
                 });

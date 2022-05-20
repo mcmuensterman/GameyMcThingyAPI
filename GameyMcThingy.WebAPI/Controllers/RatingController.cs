@@ -2,29 +2,49 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameyMcThingy.Data.Entities;
+using GameyMcThingy.Models.Rating;
+using GameyMcThingy.Services.Rating;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameyMcThingy.WebAPI.Controllers
 {
-    [Route("[controller]")]
-    public class RatingController : Controller
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RatingController : ControllerBase
     {
-        private readonly ILogger<RatingController> _logger;
-
-        public RatingController(ILogger<RatingController> logger)
+        private readonly IRatingService _ratingService;
+        public RatingController(IRatingService ratingService)
         {
-            _logger = logger;
+            _ratingService = ratingService;
         }
 
-        public IActionResult Index()
+        // GET api/Note or Ratings
+        [HttpGet("{userId:int}")]
+        public async Task<IActionResult> GetAllRatings([FromRoute] int userId)
         {
-            return View();
+            var ratings = await _ratingService.GetAllRatingsAsync(userId);
+            return Ok(ratings);
+
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public async Task<IActionResult> AddRatingToGame([FromBody] RatingModel model)
         {
-            return View("Error!");
+
+			if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var ratingResult = await _ratingService.CreateGameRatingAsync(model);
+            if(ratingResult)
+            {
+                return Ok("Rating was posted.");
+            }
+
+            return BadRequest("Rating could not be posted.");
         }
     }
 }

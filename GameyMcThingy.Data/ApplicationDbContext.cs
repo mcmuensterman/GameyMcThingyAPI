@@ -1,5 +1,4 @@
 using System;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +19,7 @@ namespace GameyMcThingy.Data
         public DbSet<GameEntity> GameEntities { get; set; }
 
         public DbSet<CategoryEntity> Categories { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<RatingEntity> Ratings { get; set; }
         public DbSet<ReviewEntity> Reviews { get; set; }
 
     }

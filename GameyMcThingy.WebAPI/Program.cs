@@ -1,5 +1,6 @@
 using System.Text;
 using GameyMcThingy.Data;
+using GameyMcThingy.Services.Rating;
 using GameyMcThingy.Services.Token;
 using GameyMcThingy.Services.User;
 using GameyMcThingy.Services.Game;
@@ -23,6 +24,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
 // Add User Service/Interface for Dependency Injection here
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -83,7 +87,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 });
 
-builder.Services.AddControllers();
+// builder.Services.AddControllers();
 
 var app = builder.Build();
 

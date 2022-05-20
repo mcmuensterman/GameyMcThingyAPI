@@ -21,8 +21,8 @@ namespace GameyMcThingy.Data.Entities
         public string CategoryDescriptor { get; set; }
 
         [Required]
-        public virtual Game Game { get; set; }
+        public virtual GameEntity Game { get; set; }
         
-        public List<Game> Games { get; set; }
+        public List<GameEntity> Games { get; set; }
     }
 }
