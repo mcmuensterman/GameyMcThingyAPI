@@ -11,14 +11,18 @@ namespace GameyMcThingy.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-            {
-            }
-        public DbSet<Category> Categories {get; set;}
-        public DbSet<Game> Games { get; set; }
+        {
+        }
+        public DbSet<GameEntity> Games { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        // Game Entity 14.01 ZM 
+        public DbSet<GameEntity> GameEntities { get; set; }
+
+        public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<RatingEntity> Ratings { get; set; }
-        public DbSet<Review> Reviews { get; set; }
-        public DbSet<UserEntity> Users {get; set;}
-       
+        public DbSet<ReviewEntity> Reviews { get; set; }
+
     }
+
 }
 

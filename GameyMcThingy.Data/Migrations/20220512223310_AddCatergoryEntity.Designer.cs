@@ -4,6 +4,7 @@ using GameyMcThingy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameyMcThingy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220512223310_AddCatergoryEntity")]
+    partial class AddCatergoryEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,22 +108,12 @@ namespace GameyMcThingy.Data.Migrations
                     b.Property<int?>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Score")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserEntityId")
                         .HasColumnType("int");
 
                     b.HasKey("RatingId");
 
                     b.HasIndex("GameId");
-
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("UserEntityId");
 
                     b.ToTable("Ratings");
                 });
@@ -197,19 +189,7 @@ namespace GameyMcThingy.Data.Migrations
                         .WithMany("Ratings")
                         .HasForeignKey("GameId");
 
-                    b.HasOne("GameyMcThingy.Data.Entities.Rating", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GameyMcThingy.Data.Entities.UserEntity", null)
-                        .WithMany("Ratings")
-                        .HasForeignKey("UserEntityId");
-
                     b.Navigation("Game");
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("GameyMcThingy.Data.Entities.Review", b =>
@@ -228,11 +208,6 @@ namespace GameyMcThingy.Data.Migrations
                     b.Navigation("Ratings");
 
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("GameyMcThingy.Data.Entities.UserEntity", b =>
-                {
-                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

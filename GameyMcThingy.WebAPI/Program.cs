@@ -3,6 +3,8 @@ using GameyMcThingy.Data;
 using GameyMcThingy.Services.Rating;
 using GameyMcThingy.Services.Token;
 using GameyMcThingy.Services.User;
+using GameyMcThingy.Services.Game;
+using GameyMcThingy.Services.Category;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+// builder.Services.AddScoped<IUserService, UserService>();
+// Game Service 15.02 ZM
+// builder.Services.AddScoped<IGameService, GameService>();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddHttpContextAccessor();
@@ -19,13 +27,16 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
+// Add User Service/Interface for Dependency Injection here
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "GameyMcThingy.WebApi", Version = "v1"});
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "GameyMcThingy.WebApi", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -50,9 +61,14 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
+// Add connection string and DbContext setup
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddHttpContextAccessor();
 //Add User Service/Interface for Dependency Injection here
-// builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IGameService, GameService>();
 
 // services.AddScoped<IUserService, UserService>();
 
