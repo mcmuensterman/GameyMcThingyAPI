@@ -1,30 +1,73 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using GameyMcThingy.Services.User;
+using GameyMcThingy.Models.User;
+using Microsoft.AspNetCore.Authorization;
+using GameyMcThingy.Models.Token;
+using GameyMcThingy.Services.Token;
+using GameyMcThingy.Services.Game;
+using GameyMcThingy.Models.Game;
 
 namespace GameyMcThingy.WebAPI.Controllers
 {
-    [Route("[controller]")]
-    public class GameController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class GameController : ControllerBase
     {
-        private readonly ILogger<GameController> _logger;
-
-        public GameController(ILogger<GameController> logger)
+        private readonly GameService _gameService;
+        public GameController(GameService gameService)
         {
-            _logger = logger;
+            _gameService = gameService;
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateGame([FromBody] GameCreate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (await _gameService.CreateGameAsync(request))
+                return Ok("Game created successfully.");
+            return BadRequest("Game could not be created.");
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> GetAllGames()
         {
-            return View();
+            var games = await _gameService.GetAllGamesAsync();
+            return Ok(games);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        // Get api/Game/5
+        [HttpGet("gameId:int")]
+        public async Task<IActionResult> GetGameById([FromRoute] int gameId)
         {
-            return View("Error!");
+            var detail = await _gameService.GetGameByIdAsync(gameId);
+
+            // Similar to our service method, we're using a ternary to determine our return type
+            // If the returned value (detail) is not null, return it with a 200 OK
+            // Otherwise return a NotFound() 404 response
+            return detail is not null
+            ? Ok(detail)
+            : NotFound();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateNoteById([FromBody] GameUpdate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _gameService.UpdateGameAsync(request)
+            ? Ok("Game updated successfully.")
+            : BadRequest("Game Could not be updated.");
+        }
+
+        // Delete api/Note/5
+        [HttpDelete("{gameId:int}")]
+        public async Task<IActionResult> DeleteGame([FromRoute] int gameId)
+        {
+            return await _gameService.DeleteGameAsync(gameId)
+            ? Ok($"Game {gameId} was deleted successfully.")
+            : BadRequest($"Game {gameId} could not be deleted.");
+
         }
     }
 }
