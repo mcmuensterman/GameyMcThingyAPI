@@ -4,9 +4,9 @@ namespace GameyMcThingy.Services.Game
 {
     public interface IGameService
     {
-        Task<bool> CreateGameAsnyc(GameCreate request);
+        Task<bool> CreateGameAsync(GameCreate request);
         Task<IEnumerable<GameListItem>> GetAllGamesAsync();
-        Task<GameDetail> GetGameByIdAsync(int GameId);
+        Task<GameDetail> GetGameByIdAsync(int gameId);
 
         Task<bool> UpdateGameAsync(GameUpdate request);
         Task<bool> DeleteGameAsync(int gameId);

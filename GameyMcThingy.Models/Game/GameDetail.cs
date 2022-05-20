@@ -7,3 +7,4 @@ namespace GameyMcThingy.Models.Game
         public string Manufacturer { get; set; }
     }
 }
+

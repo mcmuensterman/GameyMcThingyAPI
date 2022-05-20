@@ -52,7 +52,8 @@ namespace GameyMcThingy.Services.Game
             var gameEntity = new GameEntity
             {
                 Title = request.Title,
-                Manufacturer = request.Manufacturer
+                Manufacturer = request.Manufacturer,
+                OwnerId = _userId
             };
 
             _dbContext.Games.Add(gameEntity);
@@ -61,15 +62,15 @@ namespace GameyMcThingy.Services.Game
             return numberOfChanges == 1;
         }
 
-        public async Task<GameDetail> GetGameByIdAsync(int GameId)
+        public async Task<GameDetail> GetGameByIdAsync(int gameId)
         {
             // Find the first game that has the given Id and OwnerId that matches the requesting UserID
             var gameEntity = await _dbContext.Games
-                .FirstOrDefaultAsync(e => e.Id gameId && e.OwnerId == _userId
+                .FirstOrDefaultAsync(e => e.Id == gameId && e.OwnerId == _userId
                 );
 
             // If GameEntity is null then return null, othewrwise intialize and return a new GameDetail
-            return gameEntity is null ? null : new GameDetail
+            return new GameDetail
             {
                 Id = gameEntity.Id,
                 Title = gameEntity.Title,

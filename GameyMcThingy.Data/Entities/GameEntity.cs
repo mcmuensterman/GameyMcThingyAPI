@@ -4,15 +4,21 @@ namespace GameyMcThingy.Data.Entities
 {
     public class GameEntity
     {
+        public GameEntity()
+        {
+            // Categories = new HashSet<Category>();
+            // Ratings = new HashSet<Rating>();
+            // Reviews = new HashSet<Review>();
+        }
         [Key]
         public int Id { get; set; }
-        // !Not sure if below line is needed or not
-        // [Required]
-        // public int OwnerId { get; set; }
-        [Required]
-        public string Title { get; set; } = null!;
-        [Required]
+        public string Title { get; set; }
+        public string Manufacturer { get; set; }
+        public int OwnerId { get; set; }
 
-        public string? Manufacturer { get; set; }
+        // public virtual ICollection<Category> Categories { get; set; }
+        // public virtual ICollection<Rating> Ratings { get; set; }
+        // public virtual ICollection<Review> Reviews { get; set; }
     }
+
 }
