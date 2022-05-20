@@ -4,6 +4,7 @@ using GameyMcThingy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameyMcThingy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220519233642_ModifiedCategoryEntity")]
+    partial class ModifiedCategoryEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace GameyMcThingy.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("GameyMcThingy.Data.Entities.Category", b =>
+            modelBuilder.Entity("GameyMcThingy.Data.Entities.CategoryEntity", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -30,12 +32,17 @@ namespace GameyMcThingy.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
 
+                    b.Property<string>("CategoryDescriptor")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("GameCategory")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("GameId")
-                        .IsRequired()
+                    b.Property<int>("GameId")
                         .HasColumnType("int");
 
                     b.HasKey("CategoryId");
@@ -56,11 +63,16 @@ namespace GameyMcThingy.Data.Migrations
                     b.Property<string>("Manufacturer")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Games");
                 });
@@ -103,7 +115,7 @@ namespace GameyMcThingy.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"), 1L, 1);
 
-                    b.Property<int?>("GameId")
+                    b.Property<int>("GameId")
                         .HasColumnType("int");
 
                     b.Property<int>("Score")
@@ -170,7 +182,7 @@ namespace GameyMcThingy.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("GameyMcThingy.Data.Entities.Category", b =>
+            modelBuilder.Entity("GameyMcThingy.Data.Entities.CategoryEntity", b =>
                 {
                     b.HasOne("GameyMcThingy.Data.Entities.Game", "Game")
                         .WithMany("Categories")
@@ -181,11 +193,24 @@ namespace GameyMcThingy.Data.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("GameyMcThingy.Data.Entities.Game", b =>
+                {
+                    b.HasOne("GameyMcThingy.Data.Entities.UserEntity", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("GameyMcThingy.Data.Entities.Rating", b =>
                 {
                     b.HasOne("GameyMcThingy.Data.Entities.Game", "Game")
                         .WithMany("Ratings")
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Game");
                 });

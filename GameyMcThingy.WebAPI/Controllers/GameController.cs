@@ -9,7 +9,6 @@ using GameyMcThingy.Models.Game;
 
 namespace GameyMcThingy.WebAPI.Controllers
 {
-    //! This may not work until I do section 15.03 but it's witchcraft
     [Route("api/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
@@ -68,6 +67,7 @@ namespace GameyMcThingy.WebAPI.Controllers
             return await _gameService.DeleteGameAsync(gameId)
             ? Ok($"Game {gameId} was deleted successfully.")
             : BadRequest($"Game {gameId} could not be deleted.");
+
         }
     }
 }

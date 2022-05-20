@@ -3,6 +3,7 @@ using GameyMcThingy.Data;
 using GameyMcThingy.Services.Token;
 using GameyMcThingy.Services.User;
 using GameyMcThingy.Services.Game;
+using GameyMcThingy.Services.Category;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +19,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Game Service 15.02 ZM
 // builder.Services.AddScoped<IGameService, GameService>();
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddHttpContextAccessor();
+
+// Add User Service/Interface for Dependency Injection here
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -50,7 +58,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 // Add connection string and DbContext setup
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddHttpContextAccessor();
 //Add User Service/Interface for Dependency Injection here

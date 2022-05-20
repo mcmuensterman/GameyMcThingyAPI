@@ -18,6 +18,12 @@ namespace GameyMcThingy.Data
         public DbSet<UserEntity> Users { get; set; }
         // Game Entity 14.01 ZM 
         public DbSet<GameEntity> GameEntities { get; set; }
+
+        public DbSet<CategoryEntity> Categories { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<ReviewEntity> Reviews { get; set; }
+
     }
+
 }
 
