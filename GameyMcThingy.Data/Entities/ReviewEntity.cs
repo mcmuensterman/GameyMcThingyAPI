@@ -9,7 +9,7 @@ namespace GameyMcThingy.Data.Entities
         public string ReviewTitle { get; set; } = null!;
         public string ReviewComment { get; set; } = null!;
         public int GameId { get; set; }
-
+ 
         public virtual GameEntity Game { get; set; }
     }
 }
