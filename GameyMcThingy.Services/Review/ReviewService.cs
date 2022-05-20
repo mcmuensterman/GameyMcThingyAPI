@@ -8,16 +8,27 @@ using GameyMcThingy.Models.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using GameyMcThingy.Models;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace GameyMcThingy.Services.Review
 {
-    public class ReviewService
+    public class ReviewService : IReviewService
     {
         private readonly ApplicationDbContext _context;
-        public ReviewService(ApplicationDbContext context)
+        private readonly int _userId;
+        public ReviewService(IHttpContextAccessor httpContextAccesor, ApplicationDbContext dbContext)
         {
-            _context = context;
+            var userClaims = httpContextAccesor.HttpContext.User.Identity as ClaimsIdentity;
+            var value = userClaims.FindFirst("Id")?.Value;
+            var validId = int.TryParse(value, out _userId);
+
+            if (!validId)
+                throw new Exception("Attempted to build CatergoryService without User ID claim.");
+            
+            _context = dbContext;
         }
+
 
         // Add Review to Game
         public async Task<bool> AddReviewToGame(ReviewModel model)
