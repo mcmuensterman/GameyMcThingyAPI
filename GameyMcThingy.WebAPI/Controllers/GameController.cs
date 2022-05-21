@@ -18,6 +18,7 @@ namespace GameyMcThingy.WebAPI.Controllers
         {
             _gameService = gameService;
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateGame([FromBody] GameCreate request)
         {
@@ -50,7 +51,7 @@ namespace GameyMcThingy.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateNoteById([FromBody] GameUpdate request)
+        public async Task<IActionResult> UpdateGameById([FromBody] GameUpdate request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
