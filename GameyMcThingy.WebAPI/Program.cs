@@ -69,6 +69,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 // services.AddScoped<IUserService, UserService>();
 
