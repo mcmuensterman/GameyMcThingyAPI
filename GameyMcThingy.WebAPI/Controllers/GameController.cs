@@ -13,8 +13,8 @@ namespace GameyMcThingy.WebAPI.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
-        private readonly GameService _gameService;
-        public GameController(GameService gameService)
+        private readonly IGameService _gameService;
+        public GameController(IGameService gameService)
         {
             _gameService = gameService;
         }
@@ -23,9 +23,15 @@ namespace GameyMcThingy.WebAPI.Controllers
         public async Task<IActionResult> CreateGame([FromBody] GameCreate request)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
-            if (await _gameService.CreateGameAsync(request))
+            }
+            var createResult = await _gameService.CreateGameAsync(request);
+            if (createResult)
+            {
                 return Ok("Game created successfully.");
+            }
+
             return BadRequest("Game could not be created.");
         }
 
@@ -62,13 +68,13 @@ namespace GameyMcThingy.WebAPI.Controllers
         }
 
         // Delete api/Note/5
-        [HttpDelete("{gameId:int}")]
-        public async Task<IActionResult> DeleteGame([FromRoute] int gameId)
-        {
-            return await _gameService.DeleteGameAsync(gameId)
-            ? Ok($"Game {gameId} was deleted successfully.")
-            : BadRequest($"Game {gameId} could not be deleted.");
+        // [HttpDelete("{gameId:int}")]
+        // public async Task<IActionResult> DeleteGame([FromRoute] int gameId)
+        // {
+        //     return await _gameService.DeleteGameAsync(gameId)
+        //     ? Ok($"Game {gameId} was deleted successfully.")
+        //     : BadRequest($"Game {gameId} could not be deleted.");
 
-        }
+        // }
     }
 }
