@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameyMcThingy.WebAPI.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RatingController : ControllerBase
@@ -22,15 +22,15 @@ namespace GameyMcThingy.WebAPI.Controllers
         }
 
         // GET api/Note or Ratings
-        [HttpGet("{userId:int}")]
-        public async Task<IActionResult> GetAllRatings([FromRoute] int userId)
+        [HttpGet("{gameId:int}")]
+        public async Task<IActionResult> GetAllRatings([FromRoute] int gameId)
         {
-            var ratings = await _ratingService.GetAllRatingsAsync(userId);
+            var ratings = await _ratingService.GetAllRatingsAsync(gameId);
             return Ok(ratings);
 
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<IActionResult> AddRatingToGame([FromBody] RatingModel model)
         {
 
