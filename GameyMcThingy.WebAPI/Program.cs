@@ -4,6 +4,7 @@ using GameyMcThingy.Services.Rating;
 using GameyMcThingy.Services.Token;
 using GameyMcThingy.Services.User;
 using GameyMcThingy.Services.Game;
+using GameyMcThingy.Services.Review;
 using GameyMcThingy.Services.Category;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
