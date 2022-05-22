@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GameyMcThingy.Services.User;
 using GameyMcThingy.Models.User;
@@ -14,23 +19,27 @@ namespace GameyMcThingy.WebAPI.Controllers
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
-        public GameController(IGameService gameService)
+        private readonly ITokenService _tokenService;
+        public GameController(IGameService gameService, ITokenService tokenService)
         {
             _gameService = gameService;
+            _tokenService = tokenService;
+            
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateGame([FromBody] GameCreate request)
         {
             if (!ModelState.IsValid)
-            {
+            
                 return BadRequest(ModelState);
-            }
-            var createResult = await _gameService.CreateGameAsync(request);
-            if (createResult)
-            {
+            
+            // var createResult = await _gameService.CreateGameAsync(request);
+            // if (createResult)
+            if (await _gameService.CreateGameAsync(request))
+            
                 return Ok("Game created successfully.");
-            }
+            
 
             return BadRequest("Game could not be created.");
         }

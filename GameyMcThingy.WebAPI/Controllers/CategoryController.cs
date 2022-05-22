@@ -19,7 +19,7 @@ namespace GameyMcThingy.WebAPI.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreate request)
         {
             if (!ModelState.IsValid)
@@ -31,7 +31,7 @@ namespace GameyMcThingy.WebAPI.Controllers
             return BadRequest("Error - Please try again");
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
