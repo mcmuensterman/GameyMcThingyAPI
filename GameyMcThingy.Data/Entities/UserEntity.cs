@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameyMcThingy.Data.Entities
 {
@@ -19,6 +20,8 @@ namespace GameyMcThingy.Data.Entities
         public string Password { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
+
+        public List<RatingEntity> Ratings { get; set; }
 
     }
 }
