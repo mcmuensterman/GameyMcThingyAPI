@@ -4,7 +4,7 @@
 
 namespace GameyMcThingy.Data.Migrations
 {
-    public partial class ModifiedCategoryEntity : Migration
+    public partial class FixingGame : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

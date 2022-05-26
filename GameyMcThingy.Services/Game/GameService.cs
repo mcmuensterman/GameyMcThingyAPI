@@ -27,11 +27,6 @@ namespace GameyMcThingy.Services.Game
 
         }
 
-        public Task<bool> CreateGameAsnyc(GameCreate request)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<GameListItem>> GetAllGamesAsync()
         {
             var games = await _dbContext.Games
