@@ -7,7 +7,7 @@ namespace GameyMcThingy.Models.Game
         [Required]
         [MinLength(2, ErrorMessage = "{0} ,must be at least {1} characers long.")]
         [MaxLength(100, ErrorMessage = "{0} must contain no more than {1} characters.")]
-        public string Title { get; set; } = null!;
+        public string Title { get; set; }
         [Required]
         [MinLength(2, ErrorMessage = "{0} ,must be at least {1} characers long.")]
         [MaxLength(100, ErrorMessage = "{0} must contain no more than {1} characters.")]

@@ -10,8 +10,8 @@ namespace GameyMcThingy.Data.Entities
         [Key]
         public int CategoryId { get; set; }
 
-        [ForeignKey("Game")]
-        public int GameId { get; set; }
+        // [ForeignKey("Game")]
+        // public int GameId { get; set; }
 
         [Required]
         [MaxLength(30, ErrorMessage = "Category Name cannot be more than {1} characters.")]
@@ -21,8 +21,8 @@ namespace GameyMcThingy.Data.Entities
         public string CategoryDescriptor { get; set; }
 
         [Required]
-        public virtual GameEntity Game { get; set; }
+        public virtual ICollection<GameEntity> Games { get; set; } = new List<GameEntity>();
         
-        public List<GameEntity> Games { get; set; }
+        // public List<GameEntity> Games { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace GameyMcThingy.Services.Category
         return numberOfChanges == 1;
 
         }
-
+        
         public async Task<IEnumerable<CategoryListItem>> GetAllCategoriesAsync()
         {
             var categories = await _dbContext.Categories
